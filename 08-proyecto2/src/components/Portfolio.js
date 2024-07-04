@@ -1,7 +1,11 @@
 import React from 'react'
+import { Worklist } from './Worklist'
 
 export const Portfolio = () => {
   return (
-    <div>Portfolio</div>
+    <div className='page'>
+      <h1 className='heading'>Portafolio</h1>
+      <Worklist/>
+    </div>
   )
 }
