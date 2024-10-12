@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import { PrimerosPasos } from './PrimerosPasos';
 
 function App() {
   return (
@@ -9,14 +10,7 @@ function App() {
         <p>
           Bienvenido al master en react!!!
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <PrimerosPasos/>
       </header>
     </div>
   );
