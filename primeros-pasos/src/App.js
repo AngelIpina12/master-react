@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { PrimerosPasos } from './PrimerosPasos';
 import { Props } from './Props';
+import { EventosComponente } from './EventosComponente';
 
 function App() {
   const fichaMedica = {
@@ -18,6 +19,8 @@ function App() {
         <p>
           Bienvenido al master en react!!!
         </p>
+        <EventosComponente/>
+        <hr/>
         <Props nombre="Angel" apellidos="Ipiña" ficha={fichaMedica} />
         <hr/>
         <PrimerosPasos/>

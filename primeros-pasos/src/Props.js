@@ -1,5 +1,5 @@
 import React from 'react'
-import { PropTipes } from 'prop-types'
+// import { PropTipes } from 'prop-types'
 
 export const Props = ({nombre, apellidos, ficha}) => {
   return (
@@ -14,11 +14,11 @@ export const Props = ({nombre, apellidos, ficha}) => {
   )
 }
 
-Props.propTipes = {
-    nombre: PropTipes.string,
-    apellidos: PropTipes.string,
-    ficha: PropTipes.object,
-}
+// Props.propTipes = {
+//     nombre: PropTipes.string,
+//     apellidos: PropTipes.string,
+//     ficha: PropTipes.object,
+// }
 
 Props.defaultProps = {
     nombre: 'No hay nombre',
