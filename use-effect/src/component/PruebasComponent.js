@@ -32,7 +32,7 @@ export const PruebasComponent = () => {
         <br/>
         <input type='text' onChange={modUsuario} placeholder='Cambiar el nombre'/>
         <button onClick={cambiarFecha}>Cambiar fecha</button>
-        {usuario == "ANGEL" && <AvisoComponent/>}
+        {usuario === "ANGEL" && <AvisoComponent/>}
     </div>
   )
 }
