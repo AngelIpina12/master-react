@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { FormularioComponent } from './components/FormularioComponent';
 

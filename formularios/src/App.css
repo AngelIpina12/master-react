@@ -37,6 +37,27 @@
   }
 }
 
+.label{
+  display: block;
+  background-color: lightblue;
+  border-radius: 5px;
+  padding: 5px;
+  color: #444;
+  margin: 15px;
+}
+
+.label-green{
+  background-color: green;
+  color: white;
+}
+
+.label-gray{
+  background-color: #ccc;
+  border: 1px solid #444;
+  color: #444;
+  padding: 10px;
+}
+
 form input[type="text"],
 form select,
 form textarea {
