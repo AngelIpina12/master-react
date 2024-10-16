@@ -101,8 +101,6 @@ body {
   border-radius: 10px;
   box-shadow: 0px 0px 6px #ddd;
   margin: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
   padding-top: 60px;
   padding-bottom: 60px;
   padding-left: 25px;
@@ -135,10 +133,37 @@ input[type="button"]{
   background: #9b0202;
 }
 
+/* Estilos barra lateral */
 .lateral{
   grid-area: lateral;
-  border: 5px solid brown;
-  background: lightsalmon;
+  border-left: 1px solid #ddd;
+  background: #f6f7f9;
+  padding: 20px;
+}
+
+.lateral > div{
+  box-sizing: border-box;
+  width: 90%;
+  margin: 20px;
+  padding: 20px;
+  padding-top: 10px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px;
+}
+
+.lateral input[type="text"],
+.lateral textarea{
+  display: block;
+  margin: 0 auto;
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 5px;
+  background: #f6f7f9;
+  color: #454545;
+  width: 80%;
+  outline: 0;
+  border-color: transparent;
 }
 
 .footer{
