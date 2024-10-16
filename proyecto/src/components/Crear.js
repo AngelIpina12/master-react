@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { SaveInStorage } from '../helpers/SaveInStorage'
 
-export const Crear = () => {
+export const Crear = ({setList}) => {
   const titleComponent = "Añadir película"
 
   const [peli, setPeli] = useState({
@@ -22,8 +22,8 @@ export const Crear = () => {
       description
     }
     setPeli(peliInfo);
+    setList(elements => { return [...elements, peli] })
     SaveInStorage("pelis", peliInfo)
-    SaveInStorage("copias", peliInfo)
   }
 
   return (
