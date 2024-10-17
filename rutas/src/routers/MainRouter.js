@@ -4,6 +4,7 @@ import { Home } from "../components/Home"
 import { Articles } from "../components/Articles"
 import { Contact } from "../components/Contact"
 import { Error } from "../components/Error"
+import { Person } from "../components/Person"
 
 export const MainRouter = () => {
     return (
@@ -27,6 +28,7 @@ export const MainRouter = () => {
                 <Route path="/home" element={<Home/>}></Route>
                 <Route path="/articles" element={<Articles/>}></Route>
                 <Route path="/contact" element={<Contact/>}></Route>
+                <Route path="/person/:name/:surname" element={<Person/>}></Route>
                 <Route path="*" element={<Error/>}></Route>
             </Routes>
         </BrowserRouter>
