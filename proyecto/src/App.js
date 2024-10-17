@@ -3,6 +3,7 @@ import { Buscador } from "./components/Buscador";
 import { Crear } from "./components/Crear";
 import { Listado } from "./components/Listado";
 
+
 function App() {
   const [list, setList] = useState([])
 

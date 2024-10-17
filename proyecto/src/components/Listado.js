@@ -32,7 +32,7 @@ export const Listado = ({list, setList}) => {
                     <p className="description">{movie.description}</p>
                     <button className="edit" onClick={() => setEdit(movie.id)}>Editar</button>
                     <button className="delete" onClick={() => deleteMovie(movie.id)}>Borrar</button>
-                    {edit === movie.id && (<Edit movie={movie}/>)}
+                    {edit === movie.id && (<Edit movie={movie} getMovies={getMovies} setEdit={setEdit} setList={setList}/>)}
                 </article>
             )
         }) : <h2>No hay películas para mostrar</h2> }
