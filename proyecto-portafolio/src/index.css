@@ -19,13 +19,33 @@ code {
 
 .header{
   display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
   height: 132px;
+  border-bottom: 3px solid black;
+  margin-bottom: 35px;
 }
 
 .header .logo{
   flex-grow: 2;
+  display: flex;
 }
 
+.header .logo span{
+  display: block;
+  font-size: 90px;
+  font-weight: bolder;
+  margin-top: -8px;
+}
+
+.header .logo h3{
+  display: block;
+  flex-basis: 60px;
+  margin-left: 10px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
 
 .header nav{
   flex-grow: 1;
