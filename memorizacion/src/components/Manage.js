@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { Employees } from './Employees'
 
 export const Manage = () => {
@@ -8,6 +8,9 @@ export const Manage = () => {
     const asignManager = () => {
         setName(manager.current.value)
     }
+    const showMessage = useCallback(() => {
+        console.log("Se ha vuelto a renderizar Manage")
+    }, [page])
 
   return (
     <div>
@@ -17,7 +20,7 @@ export const Manage = () => {
         <p>Los usuarios son gestionados por {name} vienen del jsonplaceholder...</p>
         <button onClick={() => setPage(1)}>Página 1</button>
         <button onClick={() => setPage(2)}>Página 2</button>
-        <Employees page={page} />
+        <Employees page={page} showMessage={showMessage} />
     </div>
   )
 }

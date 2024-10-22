@@ -8,10 +8,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        {/* Ejercicio con hook useMemo */}
-        <Tasks />
+        {/* Ejercicio con hook useMemo <Tasks />*/}
+        
         {/* Ejercicio con metodo memo para componentes */}
-        {/* <Manage /> */}
+        <Manage />
       </header>
     </div>
   );

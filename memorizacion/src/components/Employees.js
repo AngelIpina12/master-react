@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export const Employees = React.memo(({page = 1}) => {
+export const Employees = React.memo(({page = 1, showMessage}) => {
     const [employees, setEmployees] = useState([])
     useEffect(() => {getEmployees(page)}, [page])
     useEffect(() => {console.log("Se ha vuelto a renderizar Employees")}, [employees])
@@ -9,6 +9,7 @@ export const Employees = React.memo(({page = 1}) => {
         const {data: employees} = await response.json();
         setEmployees(employees)
     }
+    showMessage()
   return (
     <div>
         <h2>Empleados de la página {page}</h2>
