@@ -1,25 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useForm } from '../hooks/useForm';
 
 export const MyForm = () => {
-    const [form, setForm] = useState({});
-    const serializedForm = (form) => {
-        const formData = new FormData(form);
-        const formDataObj = {};
-        formData.forEach((name ,value) => {
-            formDataObj[name] = value;
-        });
-        return formDataObj;
-    }
-
-    const sendData = (e) => {
-        e.preventDefault();
-        setForm(serializedForm(e.target));
-    }
-
-    const changeData = (e) => {
-        setForm({...form, [e.target.name]: e.target.value});
-    }
-
+    const {form, sendData, changeData} = useForm({});
   return (
     <div>
         <h1>Formulario</h1>
