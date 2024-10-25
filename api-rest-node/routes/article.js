@@ -8,6 +8,6 @@ router.get("/articles/:last?", ArticleController.get);
 router.get("/article/:id", ArticleController.one);
 router.post("/create", ArticleController.create);
 router.delete("/article/:id", ArticleController.remove);
-
+router.put("/article/:id", ArticleController.update);
 module.exports = router;
 

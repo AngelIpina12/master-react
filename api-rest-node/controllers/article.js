@@ -1,5 +1,5 @@
-const validator = require("validator");
 const Article = require("../models/Article");
+const { validateArticle } = require("../helpers/validate");
 
 const test = (req, res) => {
     return res.status(200).send({
@@ -24,21 +24,13 @@ const course = (req, res) => {
 const create = async (req, res) => {
     let params = req.body;
     try {
-        let validate_title = !validator.isEmpty(params.title) &&
-                            validator.isLength(params.title, { min: 5, max: undefined });
-        let validate_content = !validator.isEmpty(params.content);
-
-        if (!validate_title || !validate_content) {
-            throw new Error("No se ha podido crear el artículo");
-        }
-
-        let article = new Article(params);
-        const articleStored = await article.save();
-
-        return res.status(200).json({
+        validateArticle(params);
+        const article = new Article(params);
+        const savedArticle = await article.save();
+        return res.status(201).json({
             status: "success",
             message: "Artículo creado correctamente",
-            article: articleStored,
+            article: savedArticle
         });
     } catch (error) {
         return res.status(400).json({
@@ -112,4 +104,30 @@ const remove = async (req, res) => {
     });
 }
 
-module.exports = { test, course, create, get, one, remove };
+const update = async (req, res) => {
+    let articleId = req.params.id;
+    let params = req.body;
+    try {
+        validateArticle(params);
+    } catch (error) {
+        return res.status(400).json({
+            status: "error",
+            message: "No se ha validado el artículo",
+        });
+    }
+    let articleUpdated = await Article.findOneAndUpdate({ _id: articleId }, params, { new: true }); 
+
+    if (!articleUpdated) {
+        return res.status(404).json({
+            status: "error",
+            message: "No se ha podido editar el artículo",
+        });
+    }   
+    return res.status(200).json({
+        status: "success",
+        message: "Artículo editado correctamente",
+        article: articleUpdated,
+    });
+}
+
+module.exports = { test, course, create, get, one, remove, update };
