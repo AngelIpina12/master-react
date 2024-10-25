@@ -21,7 +21,7 @@ const course = (req, res) => {
   ]);
 }
 
-const create = (req, res) => {
+const create = async (req, res) => {
     let params = req.body;
     try {
         let validate_title = !validator.isEmpty(params.title) &&
@@ -33,18 +33,12 @@ const create = (req, res) => {
         }
 
         let article = new Article(params);
-        article.save((error, articleStored) => {
-            if (error || !articleStored){
-                return res.status(400).json({
-                    status: "error",
-                    message: "Error al guardar el artículo",
-                });
-            }
-            return res.status(200).json({
-                status: "success",
-                message: "Artículo creado correctamente",
-                article: articleStored,
-            });
+        const articleStored = await article.save();
+
+        return res.status(200).json({
+            status: "success",
+            message: "Artículo creado correctamente",
+            article: articleStored,
         });
     } catch (error) {
         return res.status(400).json({
@@ -52,12 +46,70 @@ const create = (req, res) => {
             message: "No se ha podido crear el artículo",
         });
     }
-    
+}
+
+const get = async (req, res) => {
+    try {
+        let query = Article.find({});
+        
+        if (req.params.last) {
+            query = query.limit(2);
+        }
+        
+        query = query.sort({ date: -1 });
+        
+        const articles = await query;
+
+        if (!articles || articles.length === 0) {
+            return res.status(404).json({
+                status: "error",
+                message: "No se han encontrado artículos",
+            });
+        }
+        return res.status(200).json({
+            status: "success",
+            message: "Artículos obtenidos correctamente",
+            articles,
+        });
+    } catch (error) {
+        return res.status(404).json({
+            status: "error",
+            message: "Error al obtener los artículos",
+        });
+    }
+}
+
+const one = async (req, res) => {
+    let articleId = req.params.id;
+    let article = await Article.findById(articleId);
+
+    if (!article || article.length === 0) {
+        return res.status(404).json({
+            status: "error",
+            message: "No se ha encontrado el artículo",
+        });
+    }   
     return res.status(200).json({
-        message: "Accion de guardar",
-        params,
+        status: "success",
+        message: "Artículo obtenido correctamente",
+        article,
     });
 }
 
-module.exports = { test, course, create };
+const remove = async (req, res) => {
+    let articleId = req.params.id;
+    let articleDeleted = await Article.findOneAndDelete({ _id: articleId });
 
+    if (!articleDeleted) {
+        return res.status(404).json({
+            status: "error",
+            message: "No se ha podido eliminar el artículo",
+        });
+    }
+    return res.status(200).json({
+        status: "success",
+        message: "Artículo eliminado correctamente",
+    });
+}
+
+module.exports = { test, course, create, get, one, remove };
