@@ -1,4 +1,6 @@
 const Article = require("../models/Article");
+const fs = require("fs");
+const path = require("path");
 const { validateArticle } = require("../helpers/validate");
 
 const test = (req, res) => {
@@ -130,4 +132,55 @@ const update = async (req, res) => {
     });
 }
 
-module.exports = { test, course, create, get, one, remove, update };
+const upload = async (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({
+            status: "error",
+            message: "No se ha subido ninguna imagen"
+        });
+    }
+    let file = req.file.originalname;
+    let fileSplit = file.split(".");
+    let extension = fileSplit[fileSplit.length - 1];
+    if (extension != "png" && extension != "jpg" && 
+        extension != "jpeg" && extension != "gif") {
+        fs.unlink(req.file.path);
+        return res.status(400).json({
+            status: "error",
+            message: "Extensión no válida"
+        });
+    }else{
+        let articleId = req.params.id;
+        let articleUpdated = await Article.findOneAndUpdate({ _id: articleId }, {image: req.file.filename}, { new: true }); 
+
+        if (!articleUpdated) {
+            return res.status(404).json({
+                status: "error",
+                message: "No se ha podido editar el artículo",
+            });
+        }   
+        return res.status(200).json({
+            status: "success",
+            message: "Artículo editado correctamente",
+            article: articleUpdated,
+            file: req.file
+        });
+    }
+};
+
+const image = async (req, res) => {
+    let file = req.params.file;
+    let pathImage = "./images/articles/" + file;
+    fs.stat(pathImage, (err, stats) => {
+        if (err) {
+            return res.status(404).json({
+                status: "error",
+                message: "No se ha encontrado la imagen"
+            });
+        }else{
+            return res.sendFile(path.resolve(pathImage));
+        }
+    });
+}
+
+module.exports = { test, course, create, get, one, remove, update, upload, image };
