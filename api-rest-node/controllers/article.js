@@ -183,4 +183,21 @@ const image = async (req, res) => {
     });
 }
 
-module.exports = { test, course, create, get, one, remove, update, upload, image };
+const search = async (req, res) => {
+    let search = req.params.search;
+    let query = Article.find({ title: new RegExp(search, "i") });
+    query = query.sort({ date: -1 });
+    let articles = await query;
+    if (!articles || articles.length === 0) {
+        return res.status(404).json({
+            status: "error",
+            message: "No se han encontrado artículos",
+        });
+    }   
+    return res.status(200).json({
+        status: "success",
+        articles,
+    });
+}
+
+module.exports = { test, course, create, get, one, remove, update, upload, image, search };
