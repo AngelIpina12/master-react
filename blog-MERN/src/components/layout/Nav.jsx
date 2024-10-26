@@ -1,7 +1,16 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 export const Nav = () => {
   return (
-    <div>Nav</div>
+    <nav className="nav">
+      <ul>
+        <li><NavLink to="/home">Inicio</NavLink></li>
+        <li><NavLink to="/articles">Películas</NavLink></li>
+        <li><NavLink to="/create">Crear Película</NavLink></li>
+        <li><NavLink to="/blog">Blog</NavLink></li>
+        <li><NavLink to="/contact">Contacto</NavLink></li>
+      </ul>
+    </nav>
   )
 }
