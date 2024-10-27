@@ -1,4 +1,6 @@
 import {React, useState, useEffect} from 'react'
+import { Global } from '../../helpers/Global'
+import { ResponseAjax } from '../../helpers/ResponseAjax'
 
 export const Articles = () => {
   const [articles, setArticles] = useState([])
@@ -8,15 +10,9 @@ export const Articles = () => {
   }, [])
 
   const getArticles = async () => {
-    const url = 'http://localhost:3000/api/articles'
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    const data = await response.json()
-    if(response.ok){
+    const url = Global.url + 'articles'
+    const {data, loading} = await ResponseAjax(url, 'GET')
+    if(data.status === 'success'){
       setArticles(data.articles)
     }
   }
