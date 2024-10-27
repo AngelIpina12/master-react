@@ -90,9 +90,9 @@ body {
   grid-area: content;
   background: #f6f7f9;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: initial;
 }
 
 .article-item{
@@ -105,6 +105,23 @@ body {
   padding-bottom: 60px;
   padding-left: 25px;
   padding-right: 25px;
+  text-align: left;
+  max-height: 250px;
+  display: flex;
+}
+
+.article-item .mask{
+  width: 20%;
+  overflow: hidden;
+  margin-right: 40px;
+}
+
+.article-item .mask img{
+  width: 100%;
+}
+
+.article-item h3{
+  font-size: 30px;
 }
 
 .jumbo{
