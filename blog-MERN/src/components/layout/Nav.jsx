@@ -7,7 +7,7 @@ export const Nav = () => {
       <ul>
         <li><NavLink to="/home">Inicio</NavLink></li>
         <li><NavLink to="/articles">Películas</NavLink></li>
-        <li><NavLink to="/create">Crear Película</NavLink></li>
+        <li><NavLink to="/create">Crear Artículo</NavLink></li>
         <li><NavLink to="/blog">Blog</NavLink></li>
         <li><NavLink to="/contact">Contacto</NavLink></li>
       </ul>
