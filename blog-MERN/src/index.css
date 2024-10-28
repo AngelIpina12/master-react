@@ -198,8 +198,8 @@ input[type="button"]{
   box-shadow: 0px 0px 6px;
 }
 
-.lateral input[type="text"],
-.lateral textarea{
+input[type="text"],
+textarea{
   display: block;
   margin: 0 auto;
   margin-top: 15px;
@@ -211,6 +211,29 @@ input[type="button"]{
   outline: 0;
   border-color: transparent;
 }
+
+.form-group{
+  width: 50%;
+  margin: 0 auto;
+}
+
+.form-group label{
+  display: block;
+  text-align: left;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"],
+.form-group textarea{	
+  border: 1px solid #ddd;
+  outline: 0;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
 
 /* Estilos para el pie de página */
 .footer{
