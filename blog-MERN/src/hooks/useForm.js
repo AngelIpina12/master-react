@@ -5,7 +5,7 @@ export const useForm = (initialState = {}) => {
     const serializedForm = (form) => {
         const formData = new FormData(form);
         const formDataObj = {};
-        formData.forEach((name ,value) => {
+        formData.forEach((value, name) => {
             formDataObj[name] = value;
         });
         return formDataObj;

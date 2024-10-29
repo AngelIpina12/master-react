@@ -10,10 +10,36 @@ export const Create = () => {
   const [status, setStatus] = useState("no_saved");
   const saveArticle = async (e) => {
     e.preventDefault();
-    const {data, loading} = await ResponseAjax(Global.url + 'create', 'POST', form);
-    if(data.status === 'success'){
-      setStatus("saved");
-    }else{
+    
+    try {
+      const {data} = await ResponseAjax(Global.url + 'create', 'POST', form);
+      
+      if(data.status === 'success'){
+        const fileInput = document.getElementById('file0');
+        
+        if(fileInput.files[0]){
+          const formData = new FormData();
+          formData.append('file0', fileInput.files[0]);
+          
+          const uploadResponse = await ResponseAjax(
+            Global.url + 'upload-image/' + data.article._id, 
+            'POST', 
+            formData, 
+            true
+          );
+
+          if(uploadResponse.data.status === 'success'){
+            setStatus("saved");
+          } else {
+            setStatus("saved_error");
+          }
+        } else {
+          setStatus("saved");
+        }
+      } else {
+        setStatus("error");
+      }
+    } catch(error) {
       setStatus("error");
     }
   }
@@ -23,6 +49,7 @@ export const Create = () => {
       <p>Formulario para crear un artículo</p>
       {status === "saved" && <strong>Artículo guardado correctamente</strong>}
       {status === "error" && <strong>Error al guardar el artículo</strong>}
+      {status === "saved_error" && <strong>Error al guardar la imagen</strong>}
       <form className='form' onSubmit={saveArticle}>
         <div className='form-group'>
           <label htmlFor='title'>Título</label>
