@@ -22,6 +22,8 @@ export const ResponseAjax = async (url, method, bodyData, files = false) => {
             };
         }
     }
+
+    //Pruebas
     
     const response = await fetch(url, options);
     const data = await response.json();
