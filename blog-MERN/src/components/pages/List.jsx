@@ -1,7 +1,14 @@
 import React from 'react'
 import { Global } from '../../helpers/Global'
+import { ResponseAjax } from '../../helpers/ResponseAjax'
 
 export const List = ({articles, setArticles}) => {
+  const deleteArticle = async (articleId) => {
+    let {data} = await ResponseAjax(Global.url + 'article/' + articleId, 'DELETE');
+    if(data.status === 'success'){
+      setArticles(articles.filter(article => article._id !== articleId));
+    }
+  }
   return (
     articles.map((article) => (
         <article key={article._id} className="article-item">
@@ -12,7 +19,7 @@ export const List = ({articles, setArticles}) => {
           <h3 className="title">{article.title}</h3>
           <p className="description">{article.content}</p>
           <button className="edit">Editar</button>
-          <button className="delete">Borrar</button>
+          <button className="delete" onClick={() => deleteArticle(article._id)}>Borrar</button>
         </div>
         </article>
       ))
