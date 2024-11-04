@@ -7,7 +7,7 @@ export const Home = () => {
   return (
     <div className='jumbo'>
       <h1>Bienvenido a mi Blog</h1>
-      <p>Este es un blog personal donde comparto mis experiencias.</p>
+      <p>Este es un blog personal donde comparto mis experiencias y proyectos.</p>
       <Link to="/articles" className='button'>Ver los artículos</Link>
     </div>
   )
