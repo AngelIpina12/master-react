@@ -10,15 +10,21 @@ export const Search = () => {
   const params = useParams()
 
   useEffect(() => {
-    console.log(params)
     getArticles()
   }, [])
+  
+  useEffect(() => {
+    getArticles()
+  }, [params])
 
   const getArticles = async () => {
     const url = Global.url + 'search/' + params.query
     const {data, loading} = await ResponseAjax(url, 'GET')
     if(data.status === 'success'){
       setArticles(data.articles)
+      setLoading(false)
+    }else{
+      setArticles([])
       setLoading(false)
     }
   }
