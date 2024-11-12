@@ -17,6 +17,7 @@ body {
    "content content content lateral"
    "footer footer footer footer";
    grid-template-rows: 100px 70px auto 70px;
+   grid-template-columns: 1fr 1fr 1fr 25%;
 }
 
 /* Estilos de cabecera */
@@ -161,10 +162,19 @@ body {
   overflow: hidden;
 }
 
+.form-group .mask{
+  width: 150px;
+}
+
+.form-group .mask img{
+  width: 150px;
+}
+
 .button,
 button,
 input[type="submit"],
-input[type="button"]{
+input[type="button"],
+.edit{
   text-decoration: none;
   width: 100px;
   background: linear-gradient(160deg, #03228f 0%, #0b70e1 77%);

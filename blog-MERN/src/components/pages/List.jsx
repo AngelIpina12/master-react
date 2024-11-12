@@ -19,7 +19,7 @@ export const List = ({articles, setArticles}) => {
         <div className='data'>
           <h3 className="title"><Link to={"/article/" + article._id}>{article.title}</Link></h3>
           <p className="description">{article.content}</p>
-          <button className="edit">Editar</button>
+          <Link to={"/edit/" + article._id} className="edit">Editar</Link>
           <button className="delete" onClick={() => deleteArticle(article._id)}>Borrar</button>
         </div>
         </article>
