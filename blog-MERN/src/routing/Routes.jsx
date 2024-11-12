@@ -8,6 +8,7 @@ import { Sidedbar } from '../components/layout/Sidebar'
 import { Footer } from '../components/layout/Footer'
 import { Create } from '../components/pages/Create'
 import { Search } from '../components/pages/Search'
+import { Article } from '../components/pages/Article'
 
 export const Router = () => {
   return (
@@ -21,6 +22,7 @@ export const Router = () => {
                 <Route path='/articles' element={<Articles />} />
                 <Route path='/create' element={<Create />} />
                 <Route path='/search/:query' element={<Search />} />
+                <Route path='/article/:id' element={<Article />} />
                 <Route path='*' element={<div className='jumbo'><h1>Error 404</h1></div>} />
             </Routes>
         </section>

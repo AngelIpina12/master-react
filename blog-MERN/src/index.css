@@ -124,6 +124,15 @@ body {
   font-size: 30px;
 }
 
+.article-item h3 a{
+  text-decoration: none;
+  color: black;
+}
+
+.article-item h3 a:hover{
+  color: rgb(3, 74, 227);
+}
+
 .jumbo{
   width: 85%;
   padding: 55px;
@@ -144,6 +153,12 @@ body {
   margin-bottom: 40px;
   font-size: 20px;
   color: #666;
+}
+
+.jumbo .mask{
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
 }
 
 .button,
