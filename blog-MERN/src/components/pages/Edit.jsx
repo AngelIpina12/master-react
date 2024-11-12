@@ -24,11 +24,13 @@ export const Edit = () => {
     }
   }
 
-  const saveArticle = async (e) => {
+  const editArticle = async (e) => {
     e.preventDefault();
     
+    let newArticle = form
+
     try {
-      const {data} = await ResponseAjax(Global.url + 'create', 'POST', form);
+      const {data} = await ResponseAjax(Global.url + 'article/' + params.id, 'PUT', newArticle);
       
       if(data.status === 'success'){
         const fileInput = document.getElementById('file0');
@@ -66,14 +68,14 @@ export const Edit = () => {
       {status === "saved" && <strong>Artículo guardado correctamente</strong>}
       {status === "error" && <strong>Error al guardar el artículo</strong>}
       {status === "saved_error" && <strong>Error al guardar la imagen</strong>}
-      <form className='form' onSubmit={saveArticle}>
+      <form className='form' onSubmit={editArticle}>
         <div className='form-group'>
           <label htmlFor='title'>Título</label>
-          <input type='text' name='title' id='title' onChange={changeData} value={article.title} />
+          <input type='text' name='title' id='title' onChange={changeData} defaultValue={article.title} />
         </div>
         <div className='form-group'>
           <label htmlFor='content'>Contenido</label>
-          <textarea name='content' id='content' onChange={changeData} value={article.content}></textarea>
+          <textarea name='content' id='content' onChange={changeData} defaultValue={article.content}></textarea>
         </div>
         <div className='form-group'>
           <label htmlFor='file0'>Imagen</label>
