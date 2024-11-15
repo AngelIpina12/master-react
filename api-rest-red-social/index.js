@@ -6,11 +6,20 @@ console.log("API Node para red social arrancada!")
 connection();
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+
+const userRoutes = require("./routes/user");
+const publicationRoutes = require("./routes/publication");
+const followRoutes = require("./routes/follow");
+
+app.use("/api", userRoutes);
+app.use("/api", publicationRoutes);
+app.use("/api", followRoutes);
+
 app.get("/ruta-prueba", (req, res) => {
     return res.status(200).json(
         {
