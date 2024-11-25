@@ -20,6 +20,7 @@ app.use("/api", userRoutes);
 app.use("/api", publicationRoutes);
 app.use("/api", followRoutes);
 
+//ruta de prueba
 app.get("/ruta-prueba", (req, res) => {
     return res.status(200).json(
         {
