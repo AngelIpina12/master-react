@@ -4,6 +4,13 @@ const testUser = (req, res) => {
     })
 }
 
+const register = (req, res) => {
+    return res.status(200).json({
+        message: "Acción de registro de usuarios"
+    })
+}
+
 module.exports = {
-    testUser
+    testUser,
+    register
 }
