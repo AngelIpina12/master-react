@@ -4,7 +4,8 @@ const jwt = require("../services/jwt");
 
 const testUser = (req, res) => {
     return res.status(200).send({
-        message: "Mensaje enviado desde: controllers/user.js"
+        message: "Mensaje enviado desde: controllers/user.js",
+        user: req.user
     })
 }
 
