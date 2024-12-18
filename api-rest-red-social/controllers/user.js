@@ -15,7 +15,6 @@ const register = async (req, res) => {
             message: "Faltan datos por enviar"
         });
     }
-
     try {
         const user = await User.find({
             $or: [
@@ -55,7 +54,53 @@ const register = async (req, res) => {
     }
 };
 
+const login = async (req, res) => {
+    let params = req.body;
+    if (!params.email || !params.password) {
+        return res.status(400).send({
+            status: "error",
+            message: "Faltan datos por enviar"
+        });
+    }
+    try {
+        let user = await User.findOne({
+            email: params.email
+        })
+        // .select({"password": 0});
+        if (!user) {
+            return res.status(400).send({
+                status: "error",
+                message: "Usuario no encontrado"
+            });
+        }
+        const pwd = await bcrypt.compareSync(params.password, user.password);
+        if (!pwd) {
+            return res.status(400).send({
+                status: "error",
+                message: "Contraseña incorrecta"
+            });
+        }
+        const token = false;
+        return res.status(200).send({
+            status: "success",
+            message: "Usuario logueado correctamente",
+            user: {
+                id: user._id,
+                name: user.name,
+                nick: user.nick
+            },
+            token
+        })
+    } catch (err) {
+        return res.status(500).send({
+            status: "error",
+            message: "Error al iniciar sesión"
+        });
+    }
+}
+
 module.exports = {
     testUser,
-    register
+    register,
+    login
 }
