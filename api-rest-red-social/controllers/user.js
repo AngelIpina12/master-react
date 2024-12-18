@@ -101,8 +101,31 @@ const login = async (req, res) => {
     }
 }
 
+const profile = async (req, res) => {
+    let id = req.params.id;
+    let user = await User.findById(id).select("-password -role");
+    try {
+        if (!user) {
+            return res.status(400).send({
+                status: "error",
+                message: "Usuario no encontrado"
+            });
+        }
+        return res.status(200).send({
+            status: "success",
+            user
+        });
+    } catch (err) {
+        return res.status(500).send({
+            status: "error",
+            message: "Error al obtener el perfil del usuario"
+        });
+    }
+}
+
 module.exports = {
     testUser,
     register,
-    login
+    login,
+    profile
 }
