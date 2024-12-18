@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
+const jwt = require("../services/jwt");
 
 const testUser = (req, res) => {
     return res.status(200).send({
@@ -80,7 +81,7 @@ const login = async (req, res) => {
                 message: "Contraseña incorrecta"
             });
         }
-        const token = false;
+        const token = jwt.createToken(user);
         return res.status(200).send({
             status: "success",
             message: "Usuario logueado correctamente",
