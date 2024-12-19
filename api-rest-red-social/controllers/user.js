@@ -159,10 +159,64 @@ const list = async (req, res) => {
     }
 }
 
+const update = async (req, res) => {
+    let userIdentity = req.user;
+    let userToUpdate = req.body;
+
+    // delete userToUpdate.iat;
+    // delete userToUpdate.exp;
+    // delete userToUpdate.role;
+    // delete userToUpdate.email;
+
+    try {
+        let users = await User.find({
+            $or: [
+                {email: userToUpdate.email.toLowerCase()},
+                {nick: userToUpdate.nick.toLowerCase()}
+            ]
+        })
+        let userIsSet = false;
+        users.forEach(user => {
+            if (user && user.id != userIdentity.id) {
+                userIsSet = true;
+            }
+        })
+        if (userIsSet) {
+            return res.status(400).send({
+                status: "error",
+                message: "El usuario ya existe"
+            });
+        }
+        if(userToUpdate.password) {
+            let pwd = await bcrypt.hash(userToUpdate.password, 10);
+            userToUpdate.password = pwd;
+        }
+        try {
+            let userUpdated = await User.findByIdAndUpdate(userIdentity.id, userToUpdate, {new: true});
+            return res.status(200).send({
+                status: "success",
+                message: "Usuario actualizado correctamente",
+                user: userUpdated
+            });
+        } catch (err) {
+            return res.status(400).send({
+                status: "error",
+                message: "Error al actualizar el usuario"
+            });
+        }
+    } catch (err) {
+        return res.status(400).send({
+            status: "error",
+            message: "Error al actualizar el usuario"
+        });
+    }
+}
+
 module.exports = {
     testUser,
     register,
     login,
     profile,
-    list
+    list,
+    update
 }
