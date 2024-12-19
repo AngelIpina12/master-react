@@ -3,6 +3,7 @@ const User = require("../models/user");
 const jwt = require("../services/jwt");
 const mongoosePagination = require("mongoose-pagination");
 const fs = require("fs");
+const path = require("path");
 
 const testUser = (req, res) => {
     return res.status(200).send({
@@ -259,6 +260,20 @@ const upload = async (req, res) => {
     }
 }
 
+const avatar = async (req, res) => {
+    const file = req.params.file;
+    const filePath = "./uploads/avatars/" + file;
+    fs.stat(filePath, (err, exists) => {
+        if(!exists) {
+            return res.status(400).send({
+                status: "error",
+                message: "El archivo no existe"
+            });
+        }
+        res.sendFile(path.resolve(filePath));
+    })
+}
+
 module.exports = {
     testUser,
     register,
@@ -266,5 +281,6 @@ module.exports = {
     profile,
     list,
     update,
-    upload
+    upload,
+    avatar
 }
