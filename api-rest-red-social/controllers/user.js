@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const jwt = require("../services/jwt");
 const mongoosePagination = require("mongoose-pagination");
+const fs = require("fs");
 
 const testUser = (req, res) => {
     return res.status(200).send({
@@ -171,8 +172,8 @@ const update = async (req, res) => {
     try {
         let users = await User.find({
             $or: [
-                {email: userToUpdate.email.toLowerCase()},
-                {nick: userToUpdate.nick.toLowerCase()}
+                { email: userToUpdate.email.toLowerCase() },
+                { nick: userToUpdate.nick.toLowerCase() }
             ]
         })
         let userIsSet = false;
@@ -187,27 +188,73 @@ const update = async (req, res) => {
                 message: "El usuario ya existe"
             });
         }
-        if(userToUpdate.password) {
+        if (userToUpdate.password) {
             let pwd = await bcrypt.hash(userToUpdate.password, 10);
             userToUpdate.password = pwd;
         }
         try {
-            let userUpdated = await User.findByIdAndUpdate(userIdentity.id, userToUpdate, {new: true});
+            let userUpdated = await User.findByIdAndUpdate(userIdentity.id, userToUpdate, { new: true });
+            if (!userUpdated) {
+                return res.status(400).send({
+                    status: "error",
+                    message: "No se ha podido actualizar el usuario"
+                });
+            }
             return res.status(200).send({
                 status: "success",
                 message: "Usuario actualizado correctamente",
                 user: userUpdated
             });
         } catch (err) {
-            return res.status(400).send({
+            return res.status(500).send({
                 status: "error",
-                message: "Error al actualizar el usuario"
+                message: "Ha ocurrido un error. Vuelve a intentarlo"
             });
         }
     } catch (err) {
+        return res.status(500).send({
+            status: "error",
+            message: "Ha ocurrido un error. Vuelve a intentarlo"
+        });
+    }
+}
+
+const upload = async (req, res) => {
+    if (!req.file) {
         return res.status(400).send({
             status: "error",
-            message: "Error al actualizar el usuario"
+            message: "No se ha subido el archivo"
+        });
+    }
+    let image = req.file.originalname;
+    const imageSplit = image.split("\.");
+    const extension = imageSplit[1];
+    if (extension != "png" && extension != "jpg" && extension != "jpeg" && extension != "gif") {
+        const filepath = req.file.path;
+        const fileDeleted = fs.unlinkSync(filepath);
+        return res.status(400).send({
+            status: "error",
+            message: "La extensión del archivo no es válida"
+        });
+    }
+    try {
+        let userToUpload = await User.findOneAndUpdate(req.user._id, {image: req.file.filename}, {new: true});
+        if(!userToUpload) {
+            return res.status(400).send({
+                status: "error",
+                message: "No se ha podido subir el archivo"
+            });
+        }
+        return res.status(200).send({
+            status: "success",
+            message: "Archivo subido correctamente",
+            user: userToUpload,
+            file: req.file
+        })
+    } catch (err) {
+        return res.status(500).send({
+            status: "error",
+            message: "Ha ocurrido un error. Vuelve a intentarlo"
         });
     }
 }
@@ -218,5 +265,6 @@ module.exports = {
     login,
     profile,
     list,
-    update
+    update,
+    upload
 }
