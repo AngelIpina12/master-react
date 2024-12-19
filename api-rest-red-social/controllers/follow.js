@@ -36,7 +36,36 @@ const save = async (req, res) => {
     }
 }
 
+const unfollow = async (req, res) => {
+    const userId = req.user.id;
+    const followedId = req.params.id;
+    try {
+        let followToDelete = await Follow.findOneAndDelete({
+            user: userId,
+            followed: followedId
+        });
+        if (!followToDelete) {
+            return res.status(400).send({
+                status: "error",
+                message: "No se ha podido dejar de seguir al usuario."
+            });
+        }
+        return res.status(200).send({
+            status: "success",
+            message: "Se ha dejado de seguir al usuario correctamente.",
+            identity: req.user,
+            followToDelete
+        })
+    } catch (error) {
+        return res.status(500).send({
+            status: "error",
+            message: "Ha ocurrido un error. Vuelva a intentarlo."
+        });
+    }
+}
+
 module.exports = {
     testFollow,
-    save
+    save,
+    unfollow
 }
