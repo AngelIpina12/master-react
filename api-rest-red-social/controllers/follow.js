@@ -7,6 +7,15 @@ const testFollow = (req, res) => {
     })
 }
 
+const save = async (req, res) => {
+    return res.status(200).send({
+        status: "success",
+        message: "Método para seguir a un usuario",
+        identity: req.user
+    })
+}
+
 module.exports = {
-    testFollow
+    testFollow,
+    save
 }
