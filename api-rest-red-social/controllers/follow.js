@@ -1,5 +1,5 @@
 const Follow = require("../models/follow");
-const User = require("../models/user");
+const mongoosePaginate = require("mongoose-pagination")
 
 const testFollow = (req, res) => {
     return res.status(200).send({
@@ -64,8 +64,49 @@ const unfollow = async (req, res) => {
     }
 }
 
+const following = async(req, res) => {
+    let userId = req.user.id
+    if(req.params.id) userId = req.params.id
+
+    let page = 1
+    if(req.params.page) page = req.params.page
+
+    const itemsPerPage = 5;
+    try{
+        const options = {
+            page,
+            limit: itemsPerPage,
+            populate: { path: "user followed", select: "-password -role -__v" }
+        };
+
+        const result = await Follow.paginate({ user: userId }, options);
+
+        return res.status(200).send({
+            status: "success",
+            message: "Listado de usuarios que estoy siguiendo.",
+            follows: result.docs,
+            total: result.totalDocs,
+            pages: result.totalPages
+        });
+    }catch{
+        return res.status(400).send({
+            status: "error",
+            message: "Ha ocurrido un error. Vuelva a intentarlo."
+        })
+    }
+}
+
+const followers = (req, res) => {
+    return res.status(200).send({
+        status: "success",
+        message: "Listado de usuarios que me siguen."
+    })
+}
+
 module.exports = {
     testFollow,
     save,
-    unfollow
+    unfollow,
+    following,
+    followers
 }
