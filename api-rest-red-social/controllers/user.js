@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const jwt = require("../services/jwt");
+const followService = require("../services/followService")
 const mongoosePagination = require("mongoose-pagination");
 const fs = require("fs");
 const path = require("path");
@@ -114,9 +115,12 @@ const profile = async (req, res) => {
                 message: "Usuario no encontrado"
             });
         }
+        const followInfo = await followService.followThisUser(req.user.id, id);
         return res.status(200).send({
             status: "success",
-            user
+            user,
+            following: followInfo.following,
+            followers: followInfo.followers
         });
     } catch (err) {
         return res.status(500).send({
